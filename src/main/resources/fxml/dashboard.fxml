@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800" prefWidth="1400" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.proptit.ProPlantGuard.controller.DashBoardController">
+
+   <top>
+      <HBox prefHeight="178.0" prefWidth="598.0" BorderPane.alignment="CENTER">
+         <children>
+            <ImageView fitHeight="47.0" fitWidth="56.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../img/header_icon.png" />
+               </image>
+            </ImageView>
+            <Label id="header" alignment="BOTTOM_CENTER" contentDisplay="CENTER" prefHeight="39.0" prefWidth="146.0" text="MyPlant" textFill="#40d170">
+               <font>
+                  <Font name="Bauhaus 93" size="27.0" />
+               </font>
+            </Label>
+         </children>
+      </HBox>
+   </top>
+   <left>
+      <VBox prefHeight="570.0" prefWidth="171.0" BorderPane.alignment="CENTER">
+         <children>
+            <Button fx:id="btnLibrary" mnemonicParsing="false" prefHeight="30.0" prefWidth="178.0" text="Thư viện cây" />
+            <Button fx:id="btnAdd" mnemonicParsing="false" prefHeight="30.0" prefWidth="192.0" text="Thêm cây" />
+            <Button fx:id="btnSchedule" mnemonicParsing="false" prefHeight="34.0" prefWidth="199.0" text="Lịch tưới nước" />
+            <Button fx:id="btnLog" mnemonicParsing="false" prefHeight="30.0" prefWidth="178.0" text="Nhật ký chăm sóc" />
+            <Button fx:id="btnTips" mnemonicParsing="false" prefHeight="34.0" prefWidth="182.0" text="Lời khuyên chăm sóc" />
+         </children>
+      </VBox>
+   </left>
+</BorderPane>

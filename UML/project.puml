@@ -1,0 +1,71 @@
+@startuml
+'https://plantuml.com/class-diagram
+class Tree{
+    private String name;
+    private String type;
+    private String age;
+    private String description;
+    private String imageUrl;
+}
+class TreeAdder{
+    saveTree(Tree tree)
+    showAddContent(BorderPane rootPane)
+
+}
+class TreeManager{
+    showTreeViewer(BorderPane rootPane)
+    loadTreesFromJson()
+    saveTreesToJson(List<Tree> trees)
+}
+class MainApplication{
+     start(Stage stage)
+     launchApp()
+}
+
+class ProPlantGuardApplication{
+     main(String[] args)
+    @EventListener(ApplicationReadyEvent.class)
+     handleAppStart()
+}
+class AccountController{
+    showAlert(String title, String content)
+    onRegisterButtonClick(ActionEvent actionEvent)
+    onLoginButtonClick(ActionEvent actionEvent)
+}
+class DashBoardController{
+        @FXML
+        private BorderPane rootPane
+
+        @FXML
+        private Button btnLibrary
+
+        @FXML
+        private Button btnAdd
+
+        @FXML
+        private Button btnSchedule
+
+        @FXML
+        private Button btnLog
+
+        @FXML
+        private Button btnTips
+
+        @FXML initialize()
+        showScheduleContent()
+        showLogContent()
+        showTipsContent()
+}
+class AccountManager{
+    validateCredentials(String username, String password, String filePath)
+}
+MainApplication <|-- ProPlantGuardApplication
+AccountController <|-- MainApplication
+DashBoardController <|-- MainApplication
+AccountManager -- AccountController
+DashBoardController -- AccountManager
+Tree -- TreeAdder
+TreeAdder -- TreeManager
+TreeManager -- DashBoardController
+TreeAdder -- DashBoardController
+@enduml
