@@ -3,10 +3,13 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.databind.SerializationFeature;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -16,6 +19,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
@@ -40,12 +44,6 @@ public class TreeAdder {
             e.printStackTrace();
         }
     }
-    private static void clearFields(TextField nameField, TextField speciesField, TextField ageField, TextArea descriptionArea) {
-        nameField.clear();
-        speciesField.clear();
-        ageField.clear();
-        descriptionArea.clear();
-    }
     private static void showAlert(String title, String message) {
         Stage alertStage = new Stage();
         alertStage.setTitle(title);
@@ -57,68 +55,54 @@ public class TreeAdder {
         alertStage.show();
     }
     public static void showAddContent(BorderPane rootPane) {
-        GridPane addPane = new GridPane();
-        addPane.setStyle("-fx-background-color: #e6ffe6;");
-        addPane.setHgap(10);
-        addPane.setVgap(10);
-        Label nameLabel = new Label("Tree Name:");
-        TextField nameField = new TextField();
-        Label speciesLabel = new Label("Species:");
-        TextField speciesField = new TextField();
-        Label ageLabel = new Label("Age:");
-        TextField ageField = new TextField();
-        Label descriptionLabel = new Label("Description:");
-        TextArea descriptionArea = new TextArea();
-        Label imageLabel = new Label("Tree Image:");
-        Button selectImageButton = new Button("Select Image");
-        ImageView imageView = new ImageView();
-        imageView.setFitWidth(200);
-        imageView.setFitHeight(150);
-        imageView.setPreserveRatio(true);
-        final String[] selectedImagePath = new String[1];
-        selectImageButton.setOnAction(e -> {
-            FileChooser fileChooser = new FileChooser();
-            fileChooser.setTitle("Select Tree Image");
-            fileChooser.getExtensionFilters().addAll(
-                    new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.jpeg")
-            );
-            File selectedFile = fileChooser.showOpenDialog(rootPane.getScene().getWindow());
-            if (selectedFile != null) {
-                selectedImagePath[0] = selectedFile.getAbsolutePath();
-                Image image = new Image(selectedFile.toURI().toString());
-                imageView.setImage(image);
-            }
-        });
-        Button submitButton = new Button("Add Tree");
-        Button cancelButton = new Button("Cancel");
-        addPane.add(nameLabel, 0, 0);
-        addPane.add(nameField, 1, 0);
-        addPane.add(speciesLabel, 0, 1);
-        addPane.add(speciesField, 1, 1);
-        addPane.add(ageLabel, 0, 2);
-        addPane.add(ageField, 1, 2);
-        addPane.add(descriptionLabel, 0, 3);
-        addPane.add(descriptionArea, 1, 3);
-        addPane.add(imageLabel, 0, 4);
-        addPane.add(selectImageButton, 1, 4);
-        addPane.add(imageView, 1, 5);
-        VBox buttonBox = new VBox(10, submitButton, cancelButton);
-        addPane.add(buttonBox, 1, 6);
-        submitButton.setOnAction(e -> {
-            String name = nameField.getText();
-            String species = speciesField.getText();
-            String age = ageField.getText();
-            String description = descriptionArea.getText();
-            if (name.isEmpty() || species.isEmpty() || age.isEmpty() || description.isEmpty()) {
-                showAlert("Error", "Please fill in all the fields!");
-            } else if (selectedImagePath[0] == null || selectedImagePath[0].isEmpty()) {
-                showAlert("Error", "Please select an image for the tree!");
-            } else {
-                saveTree(new Tree(name, species, age, description, selectedImagePath[0]));
-                showAlert("Success", "Tree added successfully!");
-            }
-        });
-        rootPane.setCenter(addPane);
+        try {
+            FXMLLoader loader = new FXMLLoader(TreeAdder.class.getResource("/fxml/treeaddform.fxml"));
+            Pane addPane = loader.load();
+            TextField nameField = (TextField) addPane.lookup("#nameField");
+            TextField speciesField = (TextField) addPane.lookup("#speciesField");
+            TextField ageField = (TextField) addPane.lookup("#ageField");
+            TextArea descriptionArea = (TextArea) addPane.lookup("#descriptionArea");
+            Button submitButton = (Button) addPane.lookup("#submitButton");
+            Button selectImageButton = (Button) addPane.lookup("#selectImageButton");
+            ImageView imageView = (ImageView) addPane.lookup("#imageView");
+            selectImageButton.setOnAction(event -> handleSelectImage(imageView));
+            submitButton.setOnAction(event -> {
+                String name = nameField.getText();
+                String species = speciesField.getText();
+                String ageText = ageField.getText();
+                String description = descriptionArea.getText();
+                if (name.isEmpty() || species.isEmpty() || ageText.isEmpty() || description.isEmpty()) {
+                    showAlert("Validation Error", "Cần điền đầy đủ thông tin");
+                    return;
+                }
+                File selectedImage = null;
+                if (imageView.getImage() != null) {
+                    selectedImage = new File(imageView.getImage().getUrl().replace("file:/", ""));
+                }else{
+                    imageView.setImage(null);
+                }
+                Tree tree = new Tree(name, species, ageText, description,
+                        selectedImage != null ? selectedImage.getAbsolutePath() : null);
+                saveTree(tree);
+                showAlert("Success", "Tree details successfully added!");
+            });
+            rootPane.setCenter(addPane);
+        } catch (IOException ex) {
+            throw new RuntimeException(ex);
         }
 
+    }
+    private static void handleSelectImage(ImageView imageView) {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Select Image");
+        FileChooser.ExtensionFilter imageFilter = new FileChooser.ExtensionFilter(
+                "Image Files", "*.png", "*.jpg", "*.jpeg", "*.gif", "*.bmp"
+        );
+        fileChooser.getExtensionFilters().add(imageFilter);
+        File selectedFile = fileChooser.showOpenDialog(null);
+        if (selectedFile != null) {
+            Image image = new Image(selectedFile.toURI().toString());
+            imageView.setImage(image);
+        }
+    }
 }
