@@ -10,10 +10,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.Objects;
 
 import static com.proptit.ProPlantGuard.model.AccountManager.validateCredentials;
 
@@ -32,6 +29,54 @@ public class AccountController {
     @FXML
     private Button registerButton;
 
+    @FXML
+    public void initialize(){
+        loginButton.setOnMouseEntered(e -> loginButton.setStyle(
+                "-fx-background-color: #388E3C; -fx-text-fill: white; -fx-background-radius: 8px; -fx-font-size: 14px; -fx-padding: 8px 18px;"
+        ));
+        loginButton.setOnMouseExited(e -> loginButton.setStyle(
+                "-fx-background-color: #43A047; -fx-text-fill: white; -fx-background-radius: 8px; -fx-font-size: 14px; -fx-padding: 8px 18px;"
+        ));
+
+        registerButton.setOnMouseEntered(e -> registerButton.setStyle(
+                "-fx-background-color: #57A05A; -fx-text-fill: white; -fx-background-radius: 8px; -fx-font-size: 14px; -fx-padding: 8px 18px;"
+        ));
+        registerButton.setOnMouseExited(e -> registerButton.setStyle(
+                "-fx-background-color: #66BB6A; -fx-text-fill: white; -fx-background-radius: 8px; -fx-font-size: 14px; -fx-padding: 8px 18px;"
+        ));
+
+        usernameField.setOnMouseEntered(e -> usernameField.setStyle(
+                "-fx-background-color: white; -fx-border-color: #66BB6A; -fx-border-radius: 10px; -fx-padding: 8px; -fx-font-size: 14px;"
+        ));
+        usernameField.setOnMouseExited(e -> usernameField.setStyle(
+                "-fx-background-color: #f5f5f5; -fx-border-color: transparent; -fx-border-radius: 10px; -fx-padding: 8px; -fx-font-size: 14px;"
+        ));
+
+        usernameField.setOnMouseClicked(e -> usernameField.setStyle(
+                "-fx-background-color: white; -fx-border-color: #43A047; -fx-border-width: 2px; -fx-border-radius: 10px; -fx-padding: 8px; -fx-font-size: 14px;"
+        ));
+        usernameField.focusedProperty().addListener((obs, oldVal, newVal) -> {
+            if (!newVal) {
+                usernameField.setStyle("-fx-background-color: #f5f5f5; -fx-border-color: transparent; -fx-border-radius: 10px; -fx-padding: 8px; -fx-font-size: 14px;");
+            }
+        });
+
+        passwordField.setOnMouseEntered(e -> passwordField.setStyle(
+                "-fx-background-color: white; -fx-border-color: #66BB6A; -fx-border-radius: 10px; -fx-padding: 8px; -fx-font-size: 14px;"
+        ));
+        passwordField.setOnMouseExited(e -> passwordField.setStyle(
+                "-fx-background-color: #f5f5f5; -fx-border-color: transparent; -fx-border-radius: 10px; -fx-padding: 8px; -fx-font-size: 14px;"
+        ));
+
+        passwordField.setOnMouseClicked(e -> passwordField.setStyle(
+                "-fx-background-color: white; -fx-border-color: #43A047; -fx-border-width: 2px; -fx-border-radius: 10px; -fx-padding: 8px; -fx-font-size: 14px;"
+        ));
+        passwordField.focusedProperty().addListener((obs, oldVal, newVal) -> {
+            if (!newVal) {
+                passwordField.setStyle("-fx-background-color: #f5f5f5; -fx-border-color: transparent; -fx-border-radius: 10px; -fx-padding: 8px; -fx-font-size: 14px;");
+            }
+        });
+    }
     private void showAlert(String title, String content) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle(title);
@@ -70,11 +115,8 @@ public class AccountController {
             showAlert("Error", "Could not register account. Please try again.");
         }
     }
-
-
     @FXML
     public void onLoginButtonClick(ActionEvent actionEvent) {
-
         String username = usernameField.getText();
         String password = passwordField.getText();
         if (username == null || username.isEmpty() || password == null || password.isEmpty()) {

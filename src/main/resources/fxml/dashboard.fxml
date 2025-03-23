@@ -6,13 +6,14 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800" prefWidth="1400" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.proptit.ProPlantGuard.controller.DashBoardController">
+<BorderPane fx:id="rootPane" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.proptit.ProPlantGuard.controller.DashBoardController">
 
    <top>
-      <HBox prefHeight="178.0" prefWidth="598.0" BorderPane.alignment="CENTER">
+      <HBox prefHeight="178.0" prefWidth="598.0" style="-fx-background-color: #264653;" BorderPane.alignment="CENTER">
          <children>
             <ImageView fitHeight="47.0" fitWidth="56.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -28,14 +29,39 @@
       </HBox>
    </top>
    <left>
-      <VBox prefHeight="570.0" prefWidth="171.0" BorderPane.alignment="CENTER">
+      <VBox spacing="15" style="-fx-background-color: #264653; -fx-padding: 20;">
          <children>
-            <Button fx:id="btnLibrary" mnemonicParsing="false" prefHeight="30.0" prefWidth="178.0" text="Thư viện cây" />
-            <Button fx:id="btnAdd" mnemonicParsing="false" prefHeight="30.0" prefWidth="192.0" text="Thêm cây" />
-            <Button fx:id="btnSchedule" mnemonicParsing="false" prefHeight="34.0" prefWidth="199.0" text="Lịch tưới nước" />
-            <Button fx:id="btnLog" mnemonicParsing="false" prefHeight="30.0" prefWidth="178.0" text="Nhật ký chăm sóc" />
-            <Button fx:id="btnTips" mnemonicParsing="false" prefHeight="34.0" prefWidth="182.0" text="Lời khuyên chăm sóc" />
+            <Button fx:id="btnLibrary" graphicTextGap="0.0" prefHeight="43.0" prefWidth="150.0" style="-fx-background-color: #e9c46a; -fx-text-fill: #264653;                      -fx-font-size: 14; -fx-font-weight: bold; -fx-background-radius: 25;" text="  Thư viện cây">
+               <graphic>
+                  <ImageView fitHeight="32.0" fitWidth="42.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../img/book.png" />
+                     </image>
+                  </ImageView>
+               </graphic></Button>
+
+            <Button fx:id="btnTips" graphicTextGap="0.0" prefHeight="40.0" prefWidth="147.0" style="-fx-background-color: #e9c46a; -fx-text-fill: #264653;                      -fx-font-size: 14; -fx-font-weight: bold; -fx-background-radius: 25;" text="  Lời khuyên">
+               <graphic>
+                  <ImageView fitHeight="30.0" fitWidth="37.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../img/live-chat.png" />
+                     </image>
+                  </ImageView>
+               </graphic></Button>
+            <Button fx:id="btnLogout" graphicTextGap="5.0" prefHeight="18.0" prefWidth="144.0" style="-fx-background-color: #e9c46a; -fx-text-fill: #264653;                      -fx-font-size: 14; -fx-font-weight: bold; -fx-background-radius: 25;" text="Đăng xuất">
+               <graphic>
+                  <ImageView fitHeight="26.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../img/logout.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
          </children>
       </VBox>
+
    </left>
+   <bottom>
+      <Pane id="centerPane" BorderPane.alignment="CENTER" />
+   </bottom>
 </BorderPane>
