@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox alignment="CENTER" prefHeight="305.0" prefWidth="410.0" spacing="20.0" style="-fx-background-color: #f0f8ff;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.proptit.ProPlantGuard.controller.WaterScheduleController">
+
+    <padding>
+        <Insets bottom="20" left="20" right="20" top="20" />
+    </padding>
+
+    <Label alignment="CENTER" contentDisplay="RIGHT" graphicTextGap="10.0" prefHeight="58.0" prefWidth="342.0" style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #2196F3;" text="Đặt lịch tưới nước" />
+
+    <ComboBox fx:id="waterScheduleComboBox" prefWidth="250" promptText="Lịch tưới thường xuyên" style="-fx-font-size: 14px; -fx-background-color: #ffffff; -fx-border-color: #2196F3; -fx-border-radius: 5;" />
+
+    <HBox alignment="CENTER" prefHeight="23.0" prefWidth="368.0" spacing="10">
+        <Label style="-fx-font-size: 14px;" text="Chu kỳ tự chọn:" />
+        <TextField fx:id="customDaysField" prefWidth="100" promptText="Enter days" style="-fx-font-size: 14px; -fx-background-color: #ffffff; -fx-border-color: #2196F3; -fx-border-radius: 5;" />
+        <ComboBox fx:id="customUnitComboBox" prefWidth="100" style="-fx-font-size: 14px; -fx-background-color: #ffffff; -fx-border-color: #2196F3; -fx-border-radius: 5;" />
+      <ImageView fitHeight="33.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../img/date.png" />
+         </image>
+      </ImageView>
+    </HBox>
+
+    <Button fx:id="submitButton" prefHeight="37.0" prefWidth="143.0" style="-fx-font-size: 16px; -fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-weight: bold; -fx-cursor: hand; -fx-border-radius: 5;" text="Đặt lịch" />
+   <ImageView fitHeight="41.0" fitWidth="51.0" pickOnBounds="true" preserveRatio="true">
+      <image>
+         <Image url="@../img/watering-plants.png" />
+      </image>
+   </ImageView>
+
+</VBox>
